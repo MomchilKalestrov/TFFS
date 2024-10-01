@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://j06ed3mkvnqy"]
+[gd_scene load_steps=10 format=3 uid="uid://j06ed3mkvnqy"]
 
 [ext_resource type="PackedScene" uid="uid://b18i2oluo7rvl" path="res://scenes/player.tscn" id="1_y6aoc"]
 [ext_resource type="PackedScene" uid="uid://3pocx0wxgj0e" path="res://models/character.glb" id="2_emqvq"]
 [ext_resource type="Material" uid="uid://c217ps3757wlm" path="res://skybox.tres" id="3_1gn02"]
+[ext_resource type="PackedScene" uid="uid://dy0r21gsavb5n" path="res://scenes/spawner.tscn" id="4_7r0u3"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_fc7yi"]
 
@@ -23,6 +24,7 @@ ambient_light_color = Color(0.572988, 0.572988, 0.572988, 1)
 [node name="Main" type="Node"]
 
 [node name="Ground" type="StaticBody3D" parent="."]
+collision_layer = 4294967295
 
 [node name="CollisionShape" type="CollisionShape3D" parent="Ground"]
 shape = SubResource("WorldBoundaryShape3D_fc7yi")
@@ -50,3 +52,6 @@ shape = SubResource("BoxShape3D_uweaj")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3d6es")
+
+[node name="StaticBody3D" parent="." instance=ExtResource("4_7r0u3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0)

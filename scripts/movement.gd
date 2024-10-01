@@ -1,7 +1,6 @@
 extends CharacterBody3D
 
-@export var fall_acceleration = 75
-@export var mouse_sens = 0.01
+@export var fall_acceleration = 45
 @export var speed = 10
 @export var jump_force = 10
 
@@ -10,8 +9,9 @@ extends CharacterBody3D
 
 var target_velocity = Vector3.ZERO
 
-func _ready():
-    Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+func _ready() -> void:
+    Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED);
+    Globals.set_player(self);
 
 func _physics_process(delta):
     var direction = Vector3.ZERO
@@ -45,8 +45,8 @@ func _physics_process(delta):
     
 func _input(event):
     if event is InputEventMouseMotion:
-        rot_x -= event.relative.x * mouse_sens
-        rot_y -= event.relative.y * mouse_sens
+        rot_x -= event.relative.x / 700
+        rot_y -= event.relative.y / 700
         
         rot_y = clamp(rot_y, -PI / 2, PI / 2)
         

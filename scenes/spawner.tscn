@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://dy0r21gsavb5n"]
+
+[ext_resource type="Script" path="res://scripts/spawner.gd" id="1_bapjc"]
+[ext_resource type="PackedScene" uid="uid://c2pwp14naju7n" path="res://scenes/TestArbiter.tscn" id="2_lmryq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ffehw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_72ueq"]
+albedo_color = Color(1, 0.61367, 0.558941, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hqb2g"]
+
+[node name="Spawner" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("1_bapjc")
+defense_scene = ExtResource("2_lmryq")
+
+[node name="TriggerArea" type="Area3D" parent="."]
+
+[node name="CollisionShape" type="CollisionShape3D" parent="TriggerArea"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("BoxShape3D_ffehw")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_72ueq")
+mesh = SubResource("BoxMesh_hqb2g")
+
+[connection signal="body_entered" from="TriggerArea" to="." method="_on_body_entered"]
+[connection signal="body_exited" from="TriggerArea" to="." method="_on_body_exited"]

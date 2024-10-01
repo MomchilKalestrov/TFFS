@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://c2pwp14naju7n"]
+
+[ext_resource type="Script" path="res://scripts/moveable.gd" id="1_xj85e"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_nebjg"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1a7ff"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_8p34e"]
+
+[node name="TestArbiter" type="RigidBody3D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_xj85e")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_nebjg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_1a7ff")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_8p34e")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_body_exited"]
