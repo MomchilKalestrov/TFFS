@@ -19,6 +19,11 @@ config/icon="res://icon.svg"
 
 Globals="*res://scripts/globals.gd"
 
+[global_group]
+
+NPCs=""
+Bullets=""
+
 [input]
 
 move_left={

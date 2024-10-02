@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://ddovo8pym3mts"]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_8u5s2"]
+[ext_resource type="PackedScene" uid="uid://c6ixbxuvs8805" path="res://models/defense.glb" id="1_1783i"]
+[ext_resource type="PackedScene" uid="uid://unnaftynar77" path="res://scenes/bullet.tscn" id="2_e8x51"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mmcjb"]
+size = Vector3(1, 2, 1)
+
+[node name="Turk" type="CharacterBody3D"]
+script = ExtResource("1_8u5s2")
+bullet_scene = ExtResource("2_e8x51")
+
+[node name="blockbench_export" parent="." instance=ExtResource("1_1783i")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_mmcjb")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="GunEnd" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.237553, 1.4728, -1.48151)
+
+[connection signal="timeout" from="Timer" to="." method="_on_attack_timer_timeout"]

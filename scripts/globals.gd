@@ -1,4 +1,4 @@
-extends Node
+extends Node;
 
 var player_reference: CharacterBody3D = null;
 

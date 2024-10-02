@@ -1,28 +1,36 @@
-[gd_scene load_steps=5 format=3 uid="uid://c2pwp14naju7n"]
+[gd_scene load_steps=6 format=3 uid="uid://c2pwp14naju7n"]
 
-[ext_resource type="Script" path="res://scripts/moveable.gd" id="1_xj85e"]
+[ext_resource type="Script" path="res://scripts/protector.gd" id="1_xj85e"]
+[ext_resource type="PackedScene" uid="uid://unnaftynar77" path="res://scenes/bullet.tscn" id="2_6chwm"]
+[ext_resource type="PackedScene" uid="uid://c6ixbxuvs8805" path="res://models/defense.glb" id="2_dqe8v"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_nebjg"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_1a7ff"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_raxrt"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_8p34e"]
 
 [node name="TestArbiter" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_xj85e")
+bullet_scene = ExtResource("2_6chwm")
 
-[node name="Mesh" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_nebjg")
+[node name="Collision" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_raxrt")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_1a7ff")
+[node name="Model" parent="." instance=ExtResource("2_dqe8v")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1, 0)
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="MoveTrigger" type="Area3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="Collision" type="CollisionShape3D" parent="MoveTrigger"]
 shape = SubResource("SphereShape3D_8p34e")
 
-[connection signal="body_entered" from="Area3D" to="." method="_on_body_entered"]
-[connection signal="body_exited" from="Area3D" to="." method="_on_body_exited"]
+[node name="GunEnd" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.211225, 0.499899, -1.47194)
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="MoveTrigger" to="." method="_on_body_entered"]
+[connection signal="body_exited" from="MoveTrigger" to="." method="_on_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_attack_timer_timeout"]

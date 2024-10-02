@@ -1,17 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://j06ed3mkvnqy"]
+[gd_scene load_steps=11 format=3 uid="uid://j06ed3mkvnqy"]
 
 [ext_resource type="PackedScene" uid="uid://b18i2oluo7rvl" path="res://scenes/player.tscn" id="1_y6aoc"]
-[ext_resource type="PackedScene" uid="uid://3pocx0wxgj0e" path="res://models/character.glb" id="2_emqvq"]
 [ext_resource type="Material" uid="uid://c217ps3757wlm" path="res://skybox.tres" id="3_1gn02"]
+[ext_resource type="PackedScene" uid="uid://ddovo8pym3mts" path="res://scenes/turk.tscn" id="4_1evbg"]
 [ext_resource type="PackedScene" uid="uid://dy0r21gsavb5n" path="res://scenes/spawner.tscn" id="4_7r0u3"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_fc7yi"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_qfr0p"]
 size = Vector3(60, 2, 60)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_uweaj"]
-size = Vector3(1, 2, 1)
 
 [sub_resource type="Sky" id="Sky_e10e3"]
 sky_material = ExtResource("3_1gn02")
@@ -20,6 +17,12 @@ sky_material = ExtResource("3_1gn02")
 background_mode = 2
 sky = SubResource("Sky_e10e3")
 ambient_light_color = Color(0.572988, 0.572988, 0.572988, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6ortl"]
+size = Vector3(1, 10, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_d8ldt"]
+size = Vector3(1, 10, 10)
 
 [node name="Main" type="Node"]
 
@@ -39,19 +42,21 @@ shadow_enabled = true
 shadow_transmittance_bias = 1.0
 
 [node name="Player" parent="." instance=ExtResource("1_y6aoc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
-
-[node name="Statue" type="RigidBody3D" parent="."]
-transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 0, 0)
-
-[node name="Shape" type="CollisionShape3D" parent="Statue"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("BoxShape3D_uweaj")
-
-[node name="Model" parent="Statue" instance=ExtResource("2_emqvq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3d6es")
 
-[node name="StaticBody3D" parent="." instance=ExtResource("4_7r0u3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0)
+[node name="Spawner" parent="." instance=ExtResource("4_7r0u3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1, -3)
+defense_scene = ExtResource("4_1evbg")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+shape = SubResource("BoxShape3D_6ortl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+mesh = SubResource("BoxMesh_d8ldt")
