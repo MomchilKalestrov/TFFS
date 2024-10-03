@@ -2,21 +2,17 @@ extends Node;
 
 @export var defense_scene: PackedScene;
 var player_in_area: bool = false;
-var player: CharacterBody3D;
-
-func _ready() -> void:
-    player = Globals.get_player();
 
 func _on_body_entered(body: Node3D) -> void:
-    if body == player:
-        var hint = player.find_child("InteractHint");
+    if body == Globals.player:
+        var hint = Globals.player.find_child("InteractHint");
         hint.visible = true;
         player_in_area = true;
 
 
 func _on_body_exited(body: Node3D):
-    if body == player:
-        var hint: RichTextLabel = player.find_child("InteractHint");
+    if body == Globals.player:
+        var hint: RichTextLabel = Globals.player.find_child("InteractHint");
         hint.visible = false;
         player_in_area = false;
         

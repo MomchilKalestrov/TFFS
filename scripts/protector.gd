@@ -12,13 +12,16 @@ var target_enemy: CharacterBody3D;
 var can_attack: bool = true;
 
 func _ready() -> void:
-    player = Globals.get_player();
     add_to_group("NPCs");
     $Timer.wait_time = shooting_timeout;
     
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
     rotation.x = 0;
     rotation.z = 0;
+    var linear_velocity = get_linear_velocity();
+    linear_velocity.x = 0;
+    linear_velocity.z = 0;
+    set_linear_velocity(linear_velocity);
     
 func _process(delta: float) -> void:
     if not get_closest_enemy():

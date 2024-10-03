@@ -11,7 +11,7 @@ var target_velocity: Vector3 = Vector3.ZERO;
 
 func _ready() -> void:
     Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED);
-    Globals.set_player(self);
+    Globals.player = self;
 
 func _physics_process(delta: float) -> void:
     var direction = Vector3.ZERO;
